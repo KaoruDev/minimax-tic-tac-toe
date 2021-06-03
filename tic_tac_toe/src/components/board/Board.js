@@ -1,7 +1,7 @@
 import React from 'react';
 import Square from '../square/Square';
 import styles from './Board.module.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {batchArray} from "../../utils/arrayUtils";
 
 export default function Board() {

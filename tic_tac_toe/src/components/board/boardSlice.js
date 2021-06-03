@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {squareSlice} from "../square/squareSlice";
 
 export const boardSlice = createSlice({
   name: 'board',

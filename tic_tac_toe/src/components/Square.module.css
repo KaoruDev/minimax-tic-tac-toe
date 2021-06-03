@@ -1,0 +1,10 @@
+.square {
+    border: 2px #ffffff solid;
+    flex: 1 25vw auto;
+}
+
+.square:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}

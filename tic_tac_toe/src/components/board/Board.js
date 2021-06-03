@@ -1,13 +1,15 @@
 import React from 'react';
 import Square from '../square/Square';
 import styles from './Board.module.css';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {batchArray} from "../../utils/arrayUtils";
+import {reset} from "./boardSlice";
 
 export default function Board() {
   const squares = useSelector((state) => state.board.squareStates);
   const gameState = useSelector((state) => state.board.gameState);
   const squaresByRow = batchArray(squares, 3);
+  const dispatch = useDispatch();
 
   const renderRows = () => (
     squaresByRow.map((row, rowIdx) => (
@@ -28,11 +30,15 @@ export default function Board() {
     ))
   );
 
+
   return (
     <>
-      <h3>{gameState}</h3>
+      <h3 className={styles.header}>{gameState}</h3>
       <div className={styles.board}>
         {renderRows()}
+      </div>
+      <div>
+        <button className={styles.resetButton} onClick={() => dispatch(reset())}>RESET</button>
       </div>
     </>
   );

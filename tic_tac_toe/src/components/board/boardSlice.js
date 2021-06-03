@@ -4,20 +4,27 @@ import * as BoardUtils from '../../utils/boardUtils';
 import BoardLogic from "./BoardLogic";
 
 export const GAME_STATES = {
-  playing: 'playing',
+  playing: '',
   playerWon: 'YOU WIN!',
   playerLose: 'YOU LOSE!',
   draw: 'DRAW'
-}
+};
+
+const INITIAL_STATE = {
+  gameState: GAME_STATES.playing,
+  squareStates: Array(9).fill(null),
+  playerMarker: 'x'
+};
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: {
-    gameState: GAME_STATES.playing,
-    squareStates: Array(9).fill(null),
-    playerMarker: 'x'
-  },
+  initialState: {...INITIAL_STATE},
   reducers: {
+    reset: (state) => {
+      state.gameState = GAME_STATES.playing;
+      state.squareStates = [...INITIAL_STATE.squareStates];
+      state.playerMarker = INITIAL_STATE.playerMarker;
+    },
     move: (state, { payload }) => {
       let board = state.squareStates;
       board[payload.squareIdx] = state.playerMarker;
@@ -47,5 +54,5 @@ export const boardSlice = createSlice({
   }
 });
 
-export const { move } = boardSlice.actions;
+export const { move, reset } = boardSlice.actions;
 export default boardSlice.reducer;

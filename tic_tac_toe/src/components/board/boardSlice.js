@@ -1,23 +1,33 @@
 import {createSlice} from "@reduxjs/toolkit";
+import * as BoardLogic from './boardLogic';
+import * as MarkerUtils from '../../utils/markerUtils';
+import * as BoardUtils from '../../utils/boardUtils';
+import {GAME_STATES} from "./boardLogic";
 
 export const boardSlice = createSlice({
   name: 'board',
   initialState: {
+    gameState: GAME_STATES.playing,
     squareStates: Array(9).fill(null),
-    isPlayerTurn: true,
-    currentMarker: 'o',
+    playerMarker: 'o',
   },
   reducers: {
     move: (state, { payload }) => {
-      console.log('move payload', payload)
-      if (!state.squareStates[payload.squareIdx]) {
-        state.squareStates[payload.squareIdx] = state.currentMarker;
-      }
+      state.squareStates[payload.squareIdx] = state.playerMarker;
 
-      if (state.currentMarker === 'o') {
-        state.currentMarker = 'x';
+      if (BoardLogic.hasWon(state.squareStates)) {
+        state.gameState = GAME_STATES.playerWins;
+      } else if (!BoardUtils.availableMoves(state.squareStates).length) {
+        state.gameState = GAME_STATES.draw;
       } else {
-        state.currentMarker = 'o';
+        let computerMarker = MarkerUtils.oppositeMarker(state.playerMarker);
+        let computerMove = BoardLogic.evaluateBestMove(state.squareStates, computerMarker);
+
+        state.squareStates[computerMove] = computerMarker;
+
+        if (BoardLogic.hasWon(state.squareStates)) {
+          state.gameState = GAME_STATES.computerWins;
+        }
       }
     }
   }

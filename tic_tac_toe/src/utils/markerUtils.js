@@ -1,0 +1,1 @@
+export const oppositeMarker = (marker) => marker === 'o' ? 'x' : 'o';

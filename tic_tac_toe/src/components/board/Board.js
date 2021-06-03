@@ -6,6 +6,7 @@ import {batchArray} from "../../utils/arrayUtils";
 
 export default function Board() {
   const squares = useSelector((state) => state.board.squareStates);
+  const gameState = useSelector((state) => state.board.gameState);
   const squaresByRow = batchArray(squares, 3);
 
   const renderRows = () => (
@@ -28,8 +29,11 @@ export default function Board() {
   );
 
   return (
-    <div className={styles.board}>
-      {renderRows()}
-    </div>
+    <>
+      <h3>{gameState}</h3>
+      <div className={styles.board}>
+        {renderRows()}
+      </div>
+    </>
   );
 }

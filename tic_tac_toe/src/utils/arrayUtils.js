@@ -1,4 +1,4 @@
-export const batchArray = function (target, batchSize) {
+export const batchArray = (target, batchSize) => {
   let result = [];
 
   for (let i = 0; i < target.length; i += batchSize) {

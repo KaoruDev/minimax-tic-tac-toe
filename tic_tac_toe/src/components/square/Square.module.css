@@ -13,7 +13,7 @@
     border-color: #61dafb;
 }
 
-.filledSquare:hover {
+.disabled:hover {
     border-color: #ffffff;
     cursor: default;
 }

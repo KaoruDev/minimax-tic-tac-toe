@@ -18,7 +18,7 @@ export default function Board() {
               const idx = sqIdx + rowIdx * 3;
               return (
                 <React.Fragment key={idx} >
-                  <Square marker={marker} idx={idx}/>
+                  <Square marker={marker} idx={idx} gameState={gameState}/>
                 </React.Fragment>
               );
             })

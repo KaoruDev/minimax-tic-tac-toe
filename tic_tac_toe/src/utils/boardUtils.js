@@ -3,3 +3,4 @@ export const availableMoves = (board) => (
     .filter(([value, _]) => !value)
     .map(([_, idx]) => idx)
 );
+

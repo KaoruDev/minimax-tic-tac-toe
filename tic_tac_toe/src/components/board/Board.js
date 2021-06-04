@@ -4,10 +4,17 @@ import styles from './Board.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {batchArray} from "../../utils/arrayUtils";
 import {reset} from "./boardSlice";
+import Score from "../score/Score";
 
 export default function Board() {
   const squares = useSelector((state) => state.board.squareStates);
   const gameState = useSelector((state) => state.board.gameState);
+  const score = useSelector((state) => ({
+    draws: state.board.draws,
+    playerScore: state.board.playerScore,
+    computerScore: state.board.computerScore,
+  }));
+
   const squaresByRow = batchArray(squares, 3);
   const dispatch = useDispatch();
 
@@ -33,6 +40,7 @@ export default function Board() {
 
   return (
     <>
+      <Score draws={score.draws} playerScore={score.playerScore} computerScore={score.computerScore}/>
       <h3 className={styles.header}>{gameState}</h3>
       <div className={styles.board}>
         {renderRows()}

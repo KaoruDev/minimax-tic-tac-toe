@@ -18,7 +18,12 @@ const INITIAL_STATE = {
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: {...INITIAL_STATE},
+  initialState: {
+    ...INITIAL_STATE,
+    playerScore: 0,
+    computerScore: 0,
+    draws: 0
+  },
   reducers: {
     reset: (state) => {
       state.gameState = GAME_STATES.playing;
@@ -34,9 +39,11 @@ export const boardSlice = createSlice({
 
       if (boardLogic.playerWon()) {
         state.gameState = GAME_STATES.playerWon;
+        state.playerScore += 1;
         return
       } else if (boardLogic.draw()) {
         state.gameState = GAME_STATES.draw;
+        state.draws += 1;
         return
       } else {
         let nextMove = boardLogic.nextBestMove();
@@ -45,10 +52,12 @@ export const boardSlice = createSlice({
 
       if (boardLogic.hasWon(board, computerMarker)) {
         state.gameState = GAME_STATES.playerLose;
+        state.computerScore += 1;
       }
 
       if (!BoardUtils.availableMoves(board).length) {
         state.gameState = GAME_STATES.draw;
+        state.draws += 1;
       }
     }
   }

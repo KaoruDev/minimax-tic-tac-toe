@@ -1,6 +1,6 @@
 import {ComponentResource} from "@pulumi/pulumi";
 import * as aws from '@pulumi/aws';
-import {GLOBAL_TAGS, policyDoc, PULUMI_PROJECT, PULUMI_STACK, ROOT_DOMAIN} from "../utils/constants";
+import {GLOBAL_TAGS, policyDoc, ROOT_DOMAIN} from "../utils/constants";
 
 export interface S3BucketConfigs {
   name: string,

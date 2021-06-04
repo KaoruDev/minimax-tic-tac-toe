@@ -1,12 +1,17 @@
 import React from 'react';
 import styles from './Square.module.css';
 import {useDispatch} from "react-redux";
-import {GAME_STATES, move} from "../board/boardSlice";
+import {move} from "../board/boardSlice";
 
-
+/**
+ * Component to render the state of a particular square in a tic-tac-toe board.
+ *
+ * The Square is clickable if no marker (x, y) as been assigned.
+ * The Square is unclickable if a marker has been assigned to the square or if the game has ended.
+ */
 export default function Square(props) {
   const dispatch = useDispatch();
-  const disabled = props.marker || props.gameState !== GAME_STATES.playing;
+  const disabled = props.marker || props.gameEnded;
 
   const buttonClasses = [styles.square];
 

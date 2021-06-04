@@ -111,15 +111,20 @@ test("#nextBestMove() avoids traps", () => {
 
   let game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
-  expect(game.nextBestMove()).toEqual(6);
+  let nextMove = game.nextBestMove();
 
-  testBoard = [
-    'o', null, null,
-    null, 'o', null,
+  expect(nextMove === 6 || nextMove === 2, `Expected next move to be 6 or 2 got: ${nextMove}`).toBeTruthy();
+});
+
+test('#nextBestMove() prolongs rigged game', () => {
+  let testBoard = [
+    null, 'x', null,
     null, null, 'x',
+    'o', 'o', 'x',
   ];
 
-  game = new BoardLogic({board: testBoard, computerMarker: 'x'});
+  let game = new BoardLogic({board: testBoard, computerMarker: 'o'});
 
-  expect(game.nextBestMove()).toEqual(6);
+  expect(game.nextBestMove()).toEqual(2);
 });
+

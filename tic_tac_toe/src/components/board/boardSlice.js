@@ -16,6 +16,9 @@ const INITIAL_STATE = {
   playerMarker: 'x'
 };
 
+/**
+ * Reducer responsible for reacting to events generated from the board.
+ */
 export const boardSlice = createSlice({
   name: 'board',
   initialState: {
@@ -25,11 +28,17 @@ export const boardSlice = createSlice({
     draws: 0
   },
   reducers: {
+    /**
+     * Resets the board's state, but keeps score.
+     */
     reset: (state) => {
       state.gameState = GAME_STATES.playing;
       state.squareStates = [...INITIAL_STATE.squareStates];
       state.playerMarker = INITIAL_STATE.playerMarker;
     },
+    /**
+     * Reacts to a player's move (click of a square), this is what moves the game forward.
+     */
     move: (state, { payload }) => {
       let board = state.squareStates;
       board[payload.squareIdx] = state.playerMarker;
@@ -60,6 +69,12 @@ export const boardSlice = createSlice({
         state.draws += 1;
       }
     },
+    /**
+     * A player may allow the computer to go first. This action will
+     *
+     * - determine a move to take on behalf of the computer and also
+     * - Set the player's marker to 'o', instead of 'x', because 'x' goes first.
+     */
     computerStart: (state) => {
       let computerMarker = state.playerMarker;
       state.playerMarker = MarkerUtils.oppositeMarker(state.playerMarker);

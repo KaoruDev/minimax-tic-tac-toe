@@ -1,18 +1,18 @@
 import {ComponentResource} from "@pulumi/pulumi";
 import * as aws from '@pulumi/aws';
-import {GLOBAL_TAGS, policyDoc} from "../utils/constants";
+import {GLOBAL_TAGS, policyDoc, PULUMI_PROJECT, PULUMI_STACK, ROOT_DOMAIN} from "../utils/constants";
 
 export interface S3BucketConfigs {
   name: string,
+  hostedZone: aws.route53.Zone,
 }
 
 export default class SiteBucket extends ComponentResource {
-  public bucket: aws.s3.Bucket;
   public outputs: {};
 
-  constructor({name}: S3BucketConfigs) {
+  constructor({name, hostedZone}: S3BucketConfigs) {
     super(`SiteBucket`, name);
-    this.bucket = new aws.s3.Bucket(name, {
+    let bucket = new aws.s3.Bucket(name, {
       website: {
         indexDocument: 'index.html',
       },
@@ -22,7 +22,7 @@ export default class SiteBucket extends ComponentResource {
       }
     },{ parent: this });
 
-    this.bucket.bucket.apply(bucketName => {
+    bucket.bucket.apply(bucketName => {
       new aws.s3.BucketPolicy('open-read-access', {
         bucket: bucketName,
         policy: JSON.stringify(policyDoc([{
@@ -38,11 +38,23 @@ export default class SiteBucket extends ComponentResource {
       }, { parent: this });
     });
 
+    bucket.websiteEndpoint.apply(console.log)
+
+    let dns = new aws.route53.Record(`${name}-alias`, {
+      type: 'A',
+      name: `${name}.${ROOT_DOMAIN}`,
+      zoneId: hostedZone.zoneId,
+      aliases: [{
+        evaluateTargetHealth: true,
+        name: bucket.websiteEndpoint,
+        zoneId: bucket.hostedZoneId,
+      }],
+    });
 
     this.outputs = {
-      bucket: this.bucket.bucket,
-      arn: this.bucket.arn,
-      siteUrl: this.bucket.websiteEndpoint
+      bucket: bucket.bucket,
+      arn: bucket.arn,
+      siteUrl: dns.name,
     };
   }
 }

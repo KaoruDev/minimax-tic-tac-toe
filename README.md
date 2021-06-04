@@ -1,7 +1,7 @@
 # Unbeatable Tic Tac Toe
 
 ## Playing Game
-Head over to [http://unbeatable-tic-tac-toe-110bd3c.s3-website-us-east-1.amazonaws.com/](http://unbeatable-tic-tac-toe-110bd3c.s3-website-us-east-1.amazonaws.com/)
+Head over to [https://unbeatable-tic-tac-toe.kohashigawa.com/](https://unbeatable-tic-tac-toe.kohashigawa.com/)
 
 ## Running Locally
 
@@ -36,6 +36,5 @@ Steps:
 ## Future Improvements
 
 * Add React Component tests
-* Add CloudFront in front of S3 bucket to provide TLS and reduced load times.
 * Add a CI to automatically upload new versions.
 * Allow for rollbacks by separating versions by directories and having the `index.html` to the current versions.

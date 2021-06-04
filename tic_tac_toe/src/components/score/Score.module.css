@@ -1,3 +1,4 @@
 .scoreHeader {
     margin: 0 auto;
+    font-size: clamp(1rem, 5.333vw, 1.5rem);
 }

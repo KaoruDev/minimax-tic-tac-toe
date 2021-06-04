@@ -14,7 +14,7 @@
   color: #61dafb;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  font-size: clamp(1rem, -1.2rem + 8.333vw, 1.17rem);
   justify-content: center;
 }
 

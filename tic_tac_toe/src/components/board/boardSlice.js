@@ -59,9 +59,18 @@ export const boardSlice = createSlice({
         state.gameState = GAME_STATES.draw;
         state.draws += 1;
       }
+    },
+    computerStart: (state) => {
+      let computerMarker = state.playerMarker;
+      state.playerMarker = MarkerUtils.oppositeMarker(state.playerMarker);
+      let board = state.squareStates;
+      const boardLogic = new BoardLogic({board, computerMarker});
+      let nextMove = boardLogic.nextBestMove();
+      board[nextMove] = computerMarker;
+      state.squareStates = board;
     }
   }
 });
 
-export const { move, reset } = boardSlice.actions;
+export const { move, reset, computerStart } = boardSlice.actions;
 export default boardSlice.reducer;

@@ -3,11 +3,12 @@ import Square from '../square/Square';
 import styles from './Board.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {batchArray} from "../../utils/arrayUtils";
-import {reset} from "./boardSlice";
+import {computerStart, reset} from "./boardSlice";
 import Score from "../score/Score";
 
-export default function Board() {
-  const squares = useSelector((state) => state.board.squareStates);
+export default function Board(props) {
+  const squares = props.squares;
+  const started = props.started;
   const gameState = useSelector((state) => state.board.gameState);
   const score = useSelector((state) => ({
     draws: state.board.draws,
@@ -37,7 +38,6 @@ export default function Board() {
     ))
   );
 
-
   return (
     <>
       <Score draws={score.draws} playerScore={score.playerScore} computerScore={score.computerScore}/>
@@ -46,7 +46,12 @@ export default function Board() {
         {renderRows()}
       </div>
       <div>
-        <button className={styles.resetButton} onClick={() => dispatch(reset())}>RESET</button>
+        {
+          started ?
+            null :
+            <button className={styles.boardButton} onClick={() => dispatch(computerStart())}>COMPUTER START</button>
+        }
+        <button className={styles.boardButton} onClick={() => dispatch(reset())}>RESET</button>
       </div>
     </>
   );

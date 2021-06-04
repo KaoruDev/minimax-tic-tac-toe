@@ -78,9 +78,7 @@ export default class BoardLogic {
   }
 
   playerWon() {
-    let result = this.hasWon(this.board, MarkerUtils.oppositeMarker(this.computerMarker));
-    console.log(`player: ${MarkerUtils.oppositeMarker(this.computerMarker)} computer: ${this.computerMarker} won:`, result, this.board)
-    return result;
+    return this.hasWon(this.board, MarkerUtils.oppositeMarker(this.computerMarker));
   }
 
   draw() {

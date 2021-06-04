@@ -17,7 +17,7 @@ test("#computerWon returns true when passed a board with a winning stage", () =>
   winStates.forEach(winState => {
     let board = Array(9).fill(null);
     winState.forEach(idx => board[idx] = 'x')
-    let boardLogic = new BoardLogic({ board, computerMaker: 'x'});
+    let boardLogic = new BoardLogic({ board, computerMarker: 'x'});
     expect(boardLogic.computerWon(), `${winState} returned false`).toBeTruthy();
   })
 });
@@ -26,7 +26,7 @@ test("#playerWon returns true when passed a board with a winning stage", () => {
   winStates.forEach(winState => {
     let board = Array(9).fill(null);
     winState.forEach(idx => board[idx] = 'o')
-    let boardLogic = new BoardLogic({ board, computerMaker: 'x'});
+    let boardLogic = new BoardLogic({ board, computerMarker: 'x'});
     expect(boardLogic.playerWon(), `${winState} returned false`).toBeTruthy();
   })
 })
@@ -38,7 +38,7 @@ test("#nextBestMove() returns winning move when there's a chance to win", () => 
     'o', 'o', null,
   ];
 
-  let game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  let game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
   expect(game.nextBestMove()).toEqual(8);
 
@@ -48,11 +48,11 @@ test("#nextBestMove() returns winning move when there's a chance to win", () => 
     null, null, null,
   ];
 
-  game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
   expect(game.nextBestMove()).toEqual(2);
 
-  game = new BoardLogic({board: testBoard, computerMaker: 'o'});
+  game = new BoardLogic({board: testBoard, computerMarker: 'o'});
 
   expect(game.nextBestMove()).toEqual(5);
 });
@@ -64,9 +64,9 @@ test("#nextBestMove() returns correct move when board opponent wins next turn", 
     'o', 'o', null,
   ];
 
-  let game = new BoardLogic({board: testBoard, computerMaker: 'o'});
+  let game = new BoardLogic({board: testBoard, computerMarker: 'o'});
 
-  // expect(game.nextBestMove()).toEqual(8);
+  expect(game.nextBestMove()).toEqual(8);
 
   testBoard = [
     'x', 'x', null,
@@ -74,7 +74,7 @@ test("#nextBestMove() returns correct move when board opponent wins next turn", 
     null, null, null,
   ]
 
-  game = new BoardLogic({board: testBoard, computerMaker: 'o'});
+  game = new BoardLogic({board: testBoard, computerMarker: 'o'});
 
   expect(game.nextBestMove()).toEqual(2);
 
@@ -84,9 +84,9 @@ test("#nextBestMove() returns correct move when board opponent wins next turn", 
     'x', 'o', null,
   ];
 
-  game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
-  // expect(game.nextBestMove()).toEqual(3);
+  expect(game.nextBestMove()).toEqual(3);
 });
 
 test("#nextBestMove() gets winning move on a more complicated board", () => {
@@ -96,7 +96,7 @@ test("#nextBestMove() gets winning move on a more complicated board", () => {
     null, 'o', 'o',
   ];
 
-  let game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  let game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
   expect(game.nextBestMove()).toEqual(4);
 });
@@ -109,7 +109,7 @@ test("#nextBestMove() avoids traps", () => {
     null, null, 'o',
   ];
 
-  let game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  let game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
   expect(game.nextBestMove()).toEqual(6);
 
@@ -119,7 +119,7 @@ test("#nextBestMove() avoids traps", () => {
     null, null, 'x',
   ];
 
-  game = new BoardLogic({board: testBoard, computerMaker: 'x'});
+  game = new BoardLogic({board: testBoard, computerMarker: 'x'});
 
   expect(game.nextBestMove()).toEqual(6);
 });

@@ -22,7 +22,7 @@
     flex-grow: 1;
 }
 
-.resetButton {
+.boardButton {
     background: background;
     color: highlight;
     border: #ffffff 2px solid;
@@ -30,9 +30,10 @@
     border-radius: 0.25rem;
     padding: 0.5rem 1.5rem;
     cursor: pointer;
+    margin: 0 1rem;
 }
 
-.resetButton:hover {
+.boardButton:hover {
     background: highlight;
     color: #ffffff;
 }
